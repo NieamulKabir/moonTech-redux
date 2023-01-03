@@ -1,22 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts, removeProduct, toggleDeleteSuccess } from "../../features/products/productsSlice";
 
 const ProductList = () => {
-  // const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
-  const { products, isLoading, deleteSuccess, isError, error } = useSelector(state => state.products);
+  // const { products, isLoading, deleteSuccess, isError, error } = useSelector(state => state.products);
 
   useEffect(() => {
-    // fetch("http://localhost:5000/products")
-    //   .then((res) => res.json())
-    //   .then((data) => setProducts(data.data));
-    dispatch(getProducts())
+    fetch("http://localhost:5000/products")
+      .then((res) => res.json())
+      .then((data) => setProducts(data.data));
+    // dispatch(getProducts())
   }, [dispatch]);
 
 
-
+/* 
   useEffect(() => {
     if (!isLoading && deleteSuccess) {
       toast.success("Successfully Removed")
@@ -27,7 +27,7 @@ const ProductList = () => {
   if (isLoading) {
     return <p>Loading</p>
   }
-
+ */
   return (
     <div class='flex flex-col justify-center items-center h-full w-full '>
       <div class='w-full max-w-7xl mx-auto rounded-lg  bg-white shadow-lg border border-gray-200'>

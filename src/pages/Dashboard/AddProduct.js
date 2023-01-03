@@ -2,29 +2,44 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
+import { useAddProductMutation } from "../../features/api/apiSlice";
 import { addProduct, togglePostSuccess } from "../../features/products/productsSlice";
 
 const AddProduct = () => {
   const { register, handleSubmit, reset } = useForm();
-  const { isLoading, postSuccess, error, isError } = useSelector(state => state.products)
+  // const { isLoading, postSuccess, error, isError } = useSelector(state => state.products)
   const dispatch = useDispatch()
 
+  /* use this method when we don't use rtk query
+    useEffect(() => {
+      if (isLoading) {
+        toast.loading('Posting.....', { id: 'addProduct' })
+      };
+      if (!isLoading && postSuccess) {
+        toast.success('Product added', { id: 'addProduct' })
+        dispatch(togglePostSuccess())
+        reset();
+      }
+      if (!isLoading && isError) {
+        toast.error(error, { id: 'addProduct' })
+      }
+    }, [dispatch, error, isError, isLoading, postSuccess, reset])
 
+     */
+
+
+
+
+  const [postProduct, { isError, isLoading, isSuccess }] = useAddProductMutation()
   useEffect(() => {
     if (isLoading) {
-      toast.loading('Posting.....', { id: 'addProduct' })
-    };
-    if (!isLoading && postSuccess) {
-      toast.success('Product added', { id: 'addProduct' })
-      dispatch(togglePostSuccess())
-      reset();
+      toast.loading('Posting', { id: 'addProduct' })
     }
-    if (!isLoading && isError) {
-      toast.error(error, { id: 'addProduct' })
+    if(isSuccess){
+      toast.success('Product Added Successfully', {id:"addProduct"});
+      reset()
     }
-  }, [dispatch, error, isError, isLoading, postSuccess, reset])
-
-
+  }, [isLoading, isSuccess, reset])
 
   const submit = (data) => {
     const product = {
@@ -40,7 +55,8 @@ const AddProduct = () => {
       ],
       spec: [],
     };
-    dispatch(addProduct(product))
+    // dispatch(addProduct(product))
+    postProduct(product)
     console.log(product);
   };
 

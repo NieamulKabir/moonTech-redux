@@ -1,35 +1,47 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../../components/ProductCard";
+import { useGetProductsQuery } from "../../features/api/apiSlice";
 import { toggle, toggleBrands } from "../../features/filter/filterSlice";
-import { getProducts } from "../../features/products/productsSlice";
+// import { getProducts } from "../../features/products/productsSlice";
 
 const Home = () => {
   // const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
   const filters = useSelector((state) => state.filter)
-  const { products, isLoading } = useSelector(state => state.products)
+  // const { products, isLoading } = useSelector(state => state.products)
   const { brands, stock } = filters;
-  useEffect(() => {
-    // fetch("http://localhost:5000/products")
-    //   .then((res) => res.json())
-    //   .then((data) => setProducts(data.data));
-    dispatch(getProducts())
-  }, [dispatch]);
+  // useEffect(() => {
 
+  /* 
+  fetch("http://localhost:5000/products")
+    .then((res) => res.json())
+    .then((data) => setProducts(data.data));
+  */
+
+  // dispatch(getProducts())
+  // }, [dispatch]);
+
+
+  const { data, isLoading, isSuccess, isError, error } = useGetProductsQuery()
+
+  const products = data?.data;
   const activeClass = "text-white  bg-indigo-500 border-white";
   let content;
 
   if (isLoading) {
     content = <h1>Loading .....</h1>
   }
-  if (products.length) {
+  if (isError) {
+    return <h1> Somethings Went wrong</h1>
+  }
+  if (products?.length) {
     content = products.map((product) => (
       <ProductCard key={product.model} product={product} />
     ));
   }
 
-  if (products.length && (stock || brands.length)) {
+  if (products?.length && (stock || brands?.length)) {
     content = products
       .filter((product) => {
         if (stock) {
