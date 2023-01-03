@@ -7,25 +7,27 @@ import { addProduct, togglePostSuccess } from "../../features/products/productsS
 
 const AddProduct = () => {
   const { register, handleSubmit, reset } = useForm();
-  // const { isLoading, postSuccess, error, isError } = useSelector(state => state.products)
+
+  /*
+  const { isLoading, postSuccess, error, isError } = useSelector(state => state.products)
   const dispatch = useDispatch()
 
-  /* use this method when we don't use rtk query
-    useEffect(() => {
-      if (isLoading) {
-        toast.loading('Posting.....', { id: 'addProduct' })
-      };
-      if (!isLoading && postSuccess) {
-        toast.success('Product added', { id: 'addProduct' })
-        dispatch(togglePostSuccess())
-        reset();
-      }
-      if (!isLoading && isError) {
-        toast.error(error, { id: 'addProduct' })
-      }
-    }, [dispatch, error, isError, isLoading, postSuccess, reset])
+    use this method when we don't use rtk query
+  useEffect(() => {
+    if (isLoading) {
+      toast.loading('Posting.....', { id: 'addProduct' })
+    };
+    if (!isLoading && postSuccess) {
+      toast.success('Product added', { id: 'addProduct' })
+      dispatch(togglePostSuccess())
+      reset();
+    }
+    if (!isLoading && isError) {
+      toast.error(error, { id: 'addProduct' })
+    }
+  }, [dispatch, error, isError, isLoading, postSuccess, reset])
 
-     */
+   */
 
 
 
@@ -35,8 +37,8 @@ const AddProduct = () => {
     if (isLoading) {
       toast.loading('Posting', { id: 'addProduct' })
     }
-    if(isSuccess){
-      toast.success('Product Added Successfully', {id:"addProduct"});
+    if (isSuccess) {
+      toast.success('Product Added Successfully', { id: "addProduct" });
       reset()
     }
   }, [isLoading, isSuccess, reset])
